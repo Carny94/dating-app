@@ -1,8 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 
-html {
+html, body {
 margin: 0;
-padding:0
+padding: 0;
+color: black;
+
 }
 * {
   font-family: 'Tajawal', sans-serif;
@@ -12,12 +14,56 @@ padding:0
   color: #fff;
   text-transform: uppercase;
   font-size: 15px;
-  background: linear-gradient(45deg, #fe3072, #ffff5948);
-  padding: 12px 38px;
-  border-radius: 38px;
+  background: linear-gradient(45deg, rgb(254, 48, 114), rgb(255, 89, 64));
+  padding: 12px 30px;
+  border-radius: 30px;
   border: none;
 }
 
 .primary-button:hover {
   background: linear-gradient(260deg, #fe3072, #ff5948);
+}
+
+body {
+  text-align: center;
+}
+
+/* ------NAVBAR------- */
+
+nav {
+  display:flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+nav .nav-button {
+  color: rgb(254, 48, 114);
+  background-color:(255, 255, 255);
+  font-size: 20px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+}
+
+nav .logo-container {
+  width: 170px;
+  margin: 15px;
+}
+
+nav .logo-container .logo {
+  width: 100%;
+}
+
+/* -----Homepage------ */
+
+
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0)10%
+  );
 }
