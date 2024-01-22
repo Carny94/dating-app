@@ -8,6 +8,7 @@ import { useState } from 'react';
 export default function Home() {
 
     const [showModel, setShowModel] = useState(false);
+    const [isSignUp, setIsSignUp] = useState(true);
 
     const authToken = false;
 
@@ -15,19 +16,26 @@ export default function Home() {
     const handleClick = () => {
        
         setShowModel(true)
+        setIsSignUp(true)
   };
 
   return (
     <>
     <div className='overlay'>
-      <Nav minimal={false} authToken={authToken} setShowModel={setShowModel} showModel={showModel}/>
+      <Nav 
+      minimal={false} 
+      authToken={authToken} 
+      setShowModel={setShowModel} 
+      showModel={showModel}
+      setIsSignUp={setIsSignUp}
+      />
       <div className="home">
-        <h1>Swipe Right™️</h1>
+        <h1 className="primary-title">Swipe Right™️</h1>
         <button className="primary-button" onClick={handleClick}>
           {authToken ? 'Sign Out' : 'Create Account'}
         </button>
         {showModel && (
-            <AuthModel setShowModel={setShowModel}/>
+            <AuthModel setShowModel={setShowModel}  isSignUp={isSignUp}/>
         )}
       </div>
     </div>

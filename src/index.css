@@ -7,6 +7,11 @@ padding: 0;
 * {
   font-family: 'Tajawal', sans-serif;
 }
+.primary-title {
+font-size: 90px;
+color: rgb(255, 255, 255);
+
+}
 
 .primary-button {
   color: #fff;
@@ -20,6 +25,20 @@ padding: 0;
 
 .primary-button:hover {
   background: linear-gradient(260deg, #fe3072, #ff5948);
+}
+.secondary-button {
+  color: rgb(121, 119, 119);
+  background-color: rgb(255, 255, 255);
+  font-weight: 500;
+  text-transform: uppercase;
+  padding: 12px 30px;
+  border-radius: 30px;
+  border: solid 2px rgb(121, 119, 119);
+  margin: 6px;
+}
+.secondary-button:hover {
+  color: rgb(48, 48, 48);
+  border: solid 2px rgb(48, 48, 48);
 }
 
 body {
@@ -69,11 +88,15 @@ nav .logo-container .logo {
     to bottom,
     rgba(0, 0, 0, 0.65) 0%,
     rgba(0, 0, 0, 0)100%
-  );
+  ), url('images/IMG_6570.JPG');
+  background-repeat: no-repeat; /* Corrected property name */
+  background-size: cover; /* Adjust as needed based on your design */
 }
 
 /* ------AUTHMODEL--------- */
 .auth-model {
+  left:0;
+  right: 0;
   position: relative;
   margin-left: auto;
   margin-right: auto;
@@ -88,4 +111,16 @@ nav .logo-container .logo {
 
 .auth-model .close-icon {
   float: right;
+}
+
+.auth-model form {
+  display: flex;
+  flex-direction: column;
+}
+
+.auth-model input[type=password],
+.auth-model input[type=email] {
+  padding: 8px;
+  margin: 8px;
+  font-size: 12px;
 }

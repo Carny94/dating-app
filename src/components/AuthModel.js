@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-export default function AuthModel ({setShowModel}){
+export default function AuthModel ({setShowModel, isSignUp}){
     const [email, setEmail] = useState(null);
     const [password, setPassWord] = useState(null);
     const [confirmPassword, setConfirmPassword] = useState(null);
     const [error, setError] = useState(null);
 
+    // const isSignUp = true;
 
-    console.log( email, password, confirmPassword);
     const handleClick = () => {
        
         setShowModel(false)
@@ -15,9 +15,16 @@ export default function AuthModel ({setShowModel}){
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        try {
+            if( isSignUp && (password !== confirmPassword)) {
+                setError('Make sure your passwords match!')
+            }
+            console.log('make a post request to our database');
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    const isSignUp = true;
 
     return (
         <div className="auth-model">
@@ -41,18 +48,18 @@ export default function AuthModel ({setShowModel}){
                     required={true}
                     onChange={(e) => setPassWord(e.target.value)}
                 />
-                <input
-                    type="password-check"
+                {isSignUp && <input
+                    type="password"
                     id="password-check"
                     name="passsword-check"
                     placeholder="confirm password"
                     required={true}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-
-
-
+                />}
+                <input className="secondary-button" type="submit" />
+                <p>{error}</p>
             </form>
+            <h2>Get the app</h2>
 
 
 
