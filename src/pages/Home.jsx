@@ -20,7 +20,7 @@ export default function Home() {
   return (
     <>
     <div className='overlay'>
-      <Nav minimal={false} authToken={authToken} setShowModel={setShowModel}/>
+      <Nav minimal={false} authToken={authToken} setShowModel={setShowModel} showModel={showModel}/>
       <div className="home">
         <h1>Swipe Right™️</h1>
         <button className="primary-button" onClick={handleClick}>
