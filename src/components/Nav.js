@@ -8,6 +8,8 @@ const handleClick = () => {
     setShowModel(true);
     setIsSignUp(false);
 }
+
+// const authToken = false;
     return(
        <nav>
         <div className="logo-container">
