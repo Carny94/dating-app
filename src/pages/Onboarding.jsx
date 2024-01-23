@@ -25,7 +25,7 @@ export default function Onboarding (){
 
     const handleChange = (e) => {
        
-        const value = e.target.value;
+        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value ;
         const name = e.target.name;
         console.log('value'+ value, 'name' + name)
 
@@ -97,7 +97,7 @@ export default function Onboarding (){
                                 name="gender_identity"
                                 value="man"
                                 onChange={handleChange}
-                                checked={false}
+                                checked={formData.gender_identity === 'man'}
                             />
                             <label htmlFor="man-gender-identity">Man</label>
                              <input 
@@ -106,7 +106,7 @@ export default function Onboarding (){
                                 name="gender_identity"
                                 value="woman"
                                 onChange={handleChange}
-                                checked={false}
+                                checked={formData.gender_identity === 'woman'}
                             />
                             <label htmlFor="woman-gender-identity">Woman</label>
                              <input 
@@ -115,7 +115,7 @@ export default function Onboarding (){
                                 name="gender_identity"
                                 value="more"
                                 onChange={handleChange}
-                                checked={false}
+                                checked={formData.show_gender}
                             />
                             <label htmlFor="more-gender-identity">More</label>
                             </div>
@@ -125,7 +125,7 @@ export default function Onboarding (){
                                 id="show-gender"
                                 name="show_gender"
                                 onChange={handleChange}
-                                checked={false}
+                                checked={formData.show_gender}
                             />
                             <label>Show Me</label>
                             <div className="multiple-input-container">
@@ -135,7 +135,7 @@ export default function Onboarding (){
                                  name="gender_interest"
                                  value="man"
                                  onChange={handleChange}
-                                 checked={false}
+                                 checked={formData.gender_interest === 'man'}
                              />
                              <label htmlFor="man-gender-interest">Man</label>
                               <input 
@@ -144,7 +144,7 @@ export default function Onboarding (){
                                  id="woman-gender-interest"                                 
                                  value="woman"
                                  onChange={handleChange}
-                                 checked={false}
+                                 checked={formData.gender_interest === 'woman'}
                              />
                              <label htmlFor="woman-gender-interest">Woman</label>
                               <input 
@@ -153,7 +153,7 @@ export default function Onboarding (){
                                  id="everyone-gender-interest"                                 
                                  value="everyone"
                                  onChange={handleChange}
-                                 checked={false}
+                                 checked={formData.gender_interest === 'everyone'}
                              />
                              <label htmlFor="everyone-gender-interest">Everyone</label>
                          </div>

@@ -201,3 +201,13 @@ nav .logo-container .logo {
 .onboarding form input[type="radio"]:active {
   background-color: rgb(226, 115, 155);
 }
+
+.onboarding form .photo-container {
+  width: 100%;
+  height: auto;
+}
+
+.onboarding form .photo-container img {
+  max-width: 100%; 
+  height: auto; 
+}
