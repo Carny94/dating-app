@@ -1,6 +1,10 @@
 const express = require('express');
  const path = require('path');
  const favicon = require('serve-favicon');
+ const { MongoClient } = require('mongodb');
+ const uri = 'mongodb+srv:carnealao:Mookie123!@cluster0.hheozaf.mongodb.net/?retryWrites=true&w=majority'
+
+
  const logger = require('morgan');
  require('dotenv').config();
  require('./config/database');
@@ -24,6 +28,9 @@ app.get('/*', function(req, res) {
  // Configure to use port 3001 instead of 3000 during
  // development to avoid collision with React's dev server
  const port = process.env.PORT || 3001;
+
+ app.use('/api/routes/dashboard', require('./routes/api/dashboard'));
+
 	
  app.listen(port, function() {
    console.log(`Express app running on port ${port}`)

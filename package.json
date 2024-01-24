@@ -7,9 +7,14 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@vonage/vivid": "^3.46.0",
+    "bcrypt": "^5.1.1",
     "card": "^2.5.4",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.2",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.3.0",
     "mongoose": "^8.1.0",
     "morgan": "^1.10.0",
     "react": "^18.2.0",
@@ -21,7 +26,6 @@
     "tinder": "^1.19.0"
   },
   "scripts": {
-    
     "start": " react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
