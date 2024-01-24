@@ -319,4 +319,10 @@ nav .logo-container .logo {
   overflow-y: auto;
 
 }
+/* --------- CHAT INPUT-------- */
+.chat-input {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
 

@@ -2,9 +2,11 @@
 
 export default function Chat () {
     return(
-   <div className="chat-display">
+        <>
+            <div className="chat-display">
 
     
-    </div>
+             </div>
+    </>
     )
 }
