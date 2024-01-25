@@ -3,9 +3,9 @@ const router = express.Router();
 
 const usersCtrl = require('../../controllers/api/users');
 
-
-router.get('/', usersCtrl.create);
 router.post('/signup', usersCtrl.signUp); 
+router.get('/', usersCtrl.getAllUsers);
+
 
 
 

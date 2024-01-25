@@ -24,7 +24,7 @@ export default function AuthModel ({setShowModel, isSignUp}){
                 return
             }
             const response = await axios.post('http://localhost:3000/signup', {email, password}) 
-            const success =  response.status == 201;
+            const success =  response.status === 201;
 
             if(success) Navigate('/onboarding');
         } catch (error) {

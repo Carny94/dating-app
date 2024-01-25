@@ -1,5 +1,5 @@
 const {MongoClient} = require ('mongodb');
-const uri = 'mongodb+srv:carnealao:Mookie123!@cluster0.hheozaf.mongodb.net/?retryWrites=true&w=majority'
+const uri = 'mongodb+srv://carnealao:Mookie123!@cluster0.hheozaf.mongodb.net/?retryWrites=true&w=majority'
 const { v4: uuidv4} = require ('uuid')
 const jwt = require('jsonwebtoken');
 const { error } = require('console');
@@ -7,12 +7,13 @@ const bcrypt = require('bcrypt');
 
 
 
+
 module.exports = {
-    create,
+    getAllUsers,
     signUp
 }
 
-async function create (req,res) {
+async function getAllUsers (req,res) {
 
     const client = new MongoClient(uri);
 
@@ -33,7 +34,7 @@ async function create (req,res) {
 async function signUp (req,res) {
     const client = new MongoClient(uri);
     const {email, password } = req.body;
-
+console.log(req.body)
     const generatedUserId = uuidv4();
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -42,7 +43,7 @@ async function signUp (req,res) {
         const database = client.db('app-data');    
         const users = database.collection('users');
 
-        const existingUser = users.findOne({ email })
+        const existingUser = await users.findOne({ email })
 
         if (existingUser) {
             return res.status(409).send('User already exists. Please login')
@@ -61,8 +62,6 @@ async function signUp (req,res) {
         })
 
         res.status(201).json({token, user_id: generatedUserId, email: sanitizedEmail})
-        
-        
         
         } catch (err) {
             console.log(error);

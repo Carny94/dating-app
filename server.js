@@ -2,6 +2,8 @@ const express = require('express');
  const path = require('path');
  const favicon = require('serve-favicon');
  const logger = require('morgan');
+ const cors = require('cors');
+const { signUp } = require('./controllers/api/users');
 
 
 require('dotenv').config();
@@ -11,6 +13,7 @@ require('./config/database');
 	
 app.use(logger('dev'));
 app.use(express.json());
+app.use(cors());
 	
  // Configure both serve-favicon & static middleware
  // to serve from the production 'build' folder
@@ -26,6 +29,7 @@ app.use(express.json());
  const port = process.env.PORT || 3001;
 
  app.use('/users', require('./routes/api/users'));
+ app.use('/signup', signUp);
 
  app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
