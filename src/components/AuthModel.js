@@ -1,25 +1,32 @@
 import { useState } from "react";
+import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
 export default function AuthModel ({setShowModel, isSignUp}){
     const [email, setEmail] = useState(null);
     const [password, setPassWord] = useState(null);
     const [confirmPassword, setConfirmPassword] = useState(null);
     const [error, setError] = useState(null);
-
+    let Navigate = useNavigate();
     // const isSignUp = true;
 
     const handleClick = () => {
        
-        setShowModel(false)
+        setShowModel(false);
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit =  async (e) => {
+
         e.preventDefault();
         try {
             if( isSignUp && (password !== confirmPassword)) {
                 setError('Make sure your passwords match!')
+                return
             }
-            console.log('make a post request to our database');
+            const response = await axios.post('http://localhost:3000/signup', {email, password}) 
+            const success =  response.status == 201;
+
+            if(success) Navigate('/onboarding');
         } catch (error) {
             console.log(error);
         }
