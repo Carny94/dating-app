@@ -13,7 +13,7 @@ module.exports = {
 
 async function signUp (req,res) {
     const client = new MongoClient(uri);
-    const {email, password } = req.body;
+    const { email, password } = req.body;
     console.log(req.body)
     const generatedUserId = uuidv4();
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -70,6 +70,7 @@ async function login (req,res) {
 
     const client = new MongoClient(uri);
     const { email, password } = req.body;
+   
 
     try {
 
