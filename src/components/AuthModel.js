@@ -24,9 +24,10 @@ export default function AuthModel ({setShowModel, isSignUp}){
                 }
                 const response = await axios.post(`http://localhost:3000/${isSignUp ? 'signup' : 'login'}`, { email, password });
                 console.log( 'posting', email, password)
-                setCookie('Email', response.data.email);
-                setCookie('UserId', response.data.user_id);
+              
                 setCookie('AuthToken', response.data.token);
+                setCookie('UserId', response.data.user_id)
+                // original UserId
 
                 const success =  response.status === 201;
 
