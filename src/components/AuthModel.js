@@ -33,7 +33,7 @@ export default function AuthModel ({setShowModel, isSignUp}){
 
             if(success && isSignUp ) Navigate('/onboarding');
             if(success && !isSignUp ) Navigate('/dashboard');
-
+            window.location.reload();
         } catch (error) {
             console.log(error);
         }

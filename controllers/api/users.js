@@ -9,25 +9,26 @@ module.exports = {
     signUp,
     getAllUsers,
     login,
-    user
+    user,
+    getUsers
 }
 
-async function signUp (req,res) {
+async function signUp(req, res) {
     const client = new MongoClient(uri);
     const { email, password } = req.body;
-    console.log(req.body)
+    console.log(req.body);
     const generatedUserId = uuidv4();
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-        client.connect()
-        const database = client.db('app-data');    
+        await client.connect();
+        const database = client.db('app-data');
         const users = database.collection('users');
 
-        const existingUser = await users.findOne({ email })
+        const existingUser = await users.findOne({ email });
 
         if (existingUser) {
-            return res.status(409).send('User already exists. Please login')
+            return res.status(409).send('User already exists. Please login');
         }
 
         const sanitizedEmail = email.toLowerCase();
@@ -35,20 +36,22 @@ async function signUp (req,res) {
             user_id: generatedUserId,
             email: sanitizedEmail,
             hashed_password: hashedPassword
-        }
+        };
+
         const insertedUser = await users.insertOne(data);
-
-        const token = jwt.sign(insertedUser, sanitizedEmail, {
+        const token = jwt.sign({ user_id: generatedUserId }, sanitizedEmail, {
             expiresIn: 60 * 32,
-        })
+        });
 
-        res.status(201).json({token, user_id: user.user_id})
-        
-        } catch (err) {
-            console.log(error);
-        }
-
+        res.status(201).json({ token, user_id: generatedUserId });
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Internal Server Error');
+    } finally {
+        await client.close();
+    }
 }
+
 
 async function getAllUsers (req,res) {
 
@@ -127,9 +130,27 @@ async function user (req, res) {
 
         } finally {
             await client.close()
-        }
-        }
+    }
+}
 
+async function getUsers (req, res) {
+    const client = new MongoClient(uri);
+    const userId = req.query.userId
+
+    console.log('userId', userId)
+
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
+
+        const query = { user_id: userId}
+        const user = await users.findOne(query)
+        res.send(user)
+    } finally {
+        await client.close();
+    }
+}
 
 
     

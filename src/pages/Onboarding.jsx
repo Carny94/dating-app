@@ -7,7 +7,7 @@ import axios from 'axios'
 
 export default function Onboarding (){
     const [cookies, setCookie, removeCookies] = useCookies('user');
-    const navigate = useNavigate()
+    let navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         user_id: cookies.UserId,
@@ -31,16 +31,15 @@ export default function Onboarding (){
             const success = response.status === 200 
             if (success) navigate('/dashboard')
         } catch (err) {
-    console.log(err)
-    }
+            console.log(err)
+        }
 
     }
 
     const handleChange = (e) => {
        
-        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value ;
-        const name = e.target.name;
-        console.log('value'+ value, 'name' + name)
+        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value 
+        const name = e.target.name
 
         setFormData(( prevState ) => ({
             ...prevState,
@@ -185,9 +184,9 @@ export default function Onboarding (){
                     <section>
                     <label htmlFor="about">Profile Pic</label>
                         <input
-                            type="url"
-                            name="url"
-                            id="url"
+                            type= "url"
+                            name= "url"
+                            id= "url"
                             onChange={handleChange}
                             required={true}
                             />

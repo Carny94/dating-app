@@ -20,7 +20,7 @@ export default function Home() {
   };
 
   return (
-    <>
+ 
     <div className='overlay'>
       <Nav 
       minimal={false} 
@@ -39,6 +39,6 @@ export default function Home() {
         )}
       </div>
     </div>
-    </>
+ 
   );
 }
