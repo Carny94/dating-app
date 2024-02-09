@@ -10,7 +10,8 @@ module.exports = {
     genderedUsers,
     login,
     user,
-    getUsers
+    getUsers,
+    addMatch
 }
 
 async function signUp(req, res) {
@@ -57,11 +58,12 @@ async function genderedUsers (req,res) {
 
     const client = new MongoClient(uri);
     const gender = req.query.gender;
+    console.log('gender', gender)
     try {
         await client.connect()
         const database = client.db('app-data')
         const users = database.collection('users')
-        const query = {gender_identity: gender}
+        const query = {gender_identity: {$eq : gender} }
         const foundUsers = await users.find(query).toArray()
 
         res.send(foundUsers)
@@ -154,6 +156,25 @@ async function getUsers (req, res) {
     }
 }
 
+async function addMatch (req, res) {
+    const client = new MongoClient(uri);
+    const { userId, matchedUserId} = req.body;
+
+    try {
+        await client.connect()
+        const database = client.db('app-data');
+        const users = database.collection('users');
+
+        const query = { user_id: userId}
+        const updateDocument = {
+            $push: {matches: { user_id: matchedUserId}},
+        }
+        const user = await users.updateOne(query, updateDocument)
+        res.send(user)
+    } finally {
+        await client.close()
+    }
+}
 
     
 
