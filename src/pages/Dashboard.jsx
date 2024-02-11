@@ -9,7 +9,7 @@ export default function Dashboard () {
   const [ cookies, setCookie, removeCookie] = useCookies(['user'])
   const [user, setUser] = useState(null)
   const [lastDirection, setLastDirection] = useState();
-  const [ genderedUser, setGenderUsers] = useState([])
+  const [ genderedUser, setGenderUsers] = useState()
   const userId = cookies.UserId
  
 
@@ -26,7 +26,7 @@ export default function Dashboard () {
   
   const getgenderedUser = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/genderedUser', {
+      const response = await axios.get('http://localhost:3000/genderedUsers', {
       params: { gender: user?.gender_interest }
 
     })
@@ -64,6 +64,12 @@ export default function Dashboard () {
       console.log(name + ' left the screen!')
     }
 
+    const matchedUserIds = user?.matches.map(({user_id}) => user_id).concat(userId)
+
+    const filteredGenderedUsers = genderedUsers?.filter(
+      genderedUser => !matchedUserIds.includes(genderedUser.user_id)
+    )
+
     return (
       <>
       { user &&
@@ -71,7 +77,7 @@ export default function Dashboard () {
         <ChatContainer user={user}/>
         <div className='swipe-container'>
             <div className="card-container">
-            {genderedUsers?.map((genderedUser) =>
+            {filteredGenderedUsers?.map((genderedUser) =>
           <TinderCard 
            className='swipe' 
            key={genderedUser.first_name} 
