@@ -7,8 +7,8 @@ const bcrypt = require('bcrypt');
 
 module.exports = {
     signUp,
-    genderedUsers,
     login,
+    genderedUsers,
     user,
     getUsers,
     addMatch
@@ -54,25 +54,7 @@ async function signUp(req, res) {
 }
 
 
-async function genderedUsers (req,res) {
-
-    const client = new MongoClient(uri);
-    const gender = req.query.gender;
-    console.log('gender', gender)
-    try {
-        await client.connect()
-        const database = client.db('app-data')
-        const users = database.collection('users')
-        const query = {gender_identity: {$eq : gender} }
-        const foundUsers = await users.find(query).toArray()
-
-        res.send(foundUsers)
-    } finally {
-        await client.close();
-
-    }
-
-}
+    
 
 async function login (req,res) {
 
@@ -100,6 +82,26 @@ async function login (req,res) {
             }catch (err) {
         console.log(err)
     }
+}
+
+async function genderedUsers (req,res) {
+
+    const client = new MongoClient(uri);
+    const gender = req.query.gender;
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
+        const query = {gender_identity: {$eq : gender} }
+        const foundUsers = await users.find(query).toArray()
+
+        res.send(foundUsers)
+        console.log(foundUsers)
+    } finally {
+        await client.close();
+
+    }
+
 }
 
 async function user (req, res) {

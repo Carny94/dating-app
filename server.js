@@ -22,7 +22,8 @@ app.use(cors());
  app.use('/users', require('./routes/api/users'));
  app.post('/signup', signUp);
  app.post('/login', login);
- app.put('/user', user)
+ app.put('/user', user);
+
 
 
 

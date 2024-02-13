@@ -10,7 +10,7 @@ export default function Onboarding (){
     let navigate = useNavigate()
 
     const [formData, setFormData] = useState({
-        user_id: cookies.UserId,
+        user_id: cookies.UserId ,
         first_name: '',
         dob_day:'',
         dob_month:'',
@@ -20,8 +20,12 @@ export default function Onboarding (){
         gender_interest: 'woman',
         url: '',
         about:'',
-        matches: []
-    })
+        matches: [],
+        
+    }
+ 
+    )
+   
     
 
     const handleSubmit = async (e) => {

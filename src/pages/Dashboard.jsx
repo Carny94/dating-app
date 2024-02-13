@@ -3,13 +3,12 @@ import TinderCard from 'react-tinder-card';
 import ChatContainer from '../components/ChatContainer'
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
-import {genderedUsers}  from '../../controllers/api/users';
 
 export default function Dashboard () {
-  const [ cookies, setCookie, removeCookie] = useCookies(['user'])
+  const [ cookies] = useCookies(['user'])
   const [user, setUser] = useState(null)
   const [lastDirection, setLastDirection] = useState();
-  const [ genderedUser, setGenderUsers] = useState()
+  const [ genderedUsers, setGenderUsers] = useState([])
   const userId = cookies.UserId
  
 
@@ -28,8 +27,9 @@ export default function Dashboard () {
     try {
       const response = await axios.get('http://localhost:3000/genderedUsers', {
       params: { gender: user?.gender_interest }
-
+   
     })
+    console.log(response.data)
     setGenderUsers(response.data)
     } catch (error) {
       console.log(error)
@@ -39,7 +39,9 @@ export default function Dashboard () {
   useEffect(() => {
     getUser()
     getgenderedUser()
-  }, [user, genderedUser]);
+  }, []);
+
+
 
  const updateMatches = async (matchedUserId) => {
     try {
@@ -55,7 +57,8 @@ export default function Dashboard () {
     const swiped = (direction, swipedUserId) => {
     
       if (direction === 'right') {
-      updateMatches(swipedUser)
+      updateMatches()
+      // swipedUsers
     }
       setLastDirection(direction)
     }
