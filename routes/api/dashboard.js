@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
+// const express = require('express');
+// const router = express.Router();
 
-const dashboardPageCtrl = require('../../controllers/api/dashboard');
+// const dashboardPageCtrl = require('../../controllers/api/dashboard');
 
-router.get('/', dashboardPageCtrl.create);
+// router.get('/', dashboardPageCtrl.create);
 
-module.exports = router;
+// module.exports = router;

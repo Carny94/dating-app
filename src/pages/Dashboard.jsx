@@ -8,9 +8,9 @@ export default function Dashboard () {
   const [ cookies] = useCookies(['user'])
   const [user, setUser] = useState(null)
   const [lastDirection, setLastDirection] = useState();
-  const [ genderedUsers, setGenderUsers] = useState([])
+  const [ genderedUsers, setGenderUsers] = useState(null)
+  
   const userId = cookies.UserId
- 
 
   const getUser = async () => {
     try {
@@ -22,14 +22,14 @@ export default function Dashboard () {
       console.log(error)
     }
   }
-  
-  const getgenderedUser = async () => {
+
+  const getGenderedUsers = async () => {
     try {
       const response = await axios.get('http://localhost:3000/genderedUsers', {
       params: { gender: user?.gender_interest }
    
     })
-    console.log(response.data)
+   
     setGenderUsers(response.data)
     } catch (error) {
       console.log(error)
@@ -38,10 +38,15 @@ export default function Dashboard () {
 
   useEffect(() => {
     getUser()
-    getgenderedUser()
+
   }, []);
 
-
+  useEffect(() => {
+    if (user) {
+        getGenderedUsers()
+    }
+}, [user])
+  
 
  const updateMatches = async (matchedUserId) => {
     try {
@@ -57,7 +62,7 @@ export default function Dashboard () {
     const swiped = (direction, swipedUserId) => {
     
       if (direction === 'right') {
-      updateMatches()
+      updateMatches(swipedUserId)
       // swipedUsers
     }
       setLastDirection(direction)
@@ -68,7 +73,7 @@ export default function Dashboard () {
     }
 
     const matchedUserIds = user?.matches.map(({user_id}) => user_id).concat(userId)
-
+    
     const filteredGenderedUsers = genderedUsers?.filter(
       genderedUser => !matchedUserIds.includes(genderedUser.user_id)
     )
@@ -76,25 +81,25 @@ export default function Dashboard () {
     return (
       <>
       { user &&
-    <div className="dashboard">
-        <ChatContainer user={user}/>
-        <div className='swipe-container'>
+      <div className="dashboard">
+          <ChatContainer user={user}/>
+          <div className='swipe-container'>
             <div className="card-container">
-            {filteredGenderedUsers?.map((genderedUser) =>
-          <TinderCard 
-           className='swipe' 
-           key={genderedUser.first_name} 
-           onSwipe={(dir) => swiped(dir, genderedUser.user_id)} 
-           onCardLeftScreen={() => outOfFrame(genderedUser.first_name)}>
-           <div style={{ backgroundImage: 'url(' + genderedUser.url + ')'}} 
-            className='card'>
-           <h3>{genderedUser.first_name}</h3>
-            </div>
-          </TinderCard>
+              {filteredGenderedUsers?.map((genderedUser) =>
+                <TinderCard 
+                    className='swipe' 
+                    key={genderedUser.user_id} 
+                    onSwipe={(dir) => swiped(dir, genderedUser.user_id)} 
+                    onCardLeftScreen={() => outOfFrame(genderedUser.first_name)}>
+                    <div 
+                        style={{ backgroundImage: 'url(' + genderedUser.url + ')'}} 
+                        className='card'>
+                        <h3>{genderedUser.first_name}</h3>
+                    </div>
+                </TinderCard>
         )}
-
         <div className='swipe-info'>
-            {lastDirection ? <p> You swiped {lastDirection} </p> : <p/>} 
+             {lastDirection ? <p> You swiped {lastDirection} </p> : <p/>} 
         </div>
       </div>
     </div>

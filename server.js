@@ -3,8 +3,8 @@ const express = require('express');
  const favicon = require('serve-favicon');
  const logger = require('morgan');
  const cors = require('cors');
-const { signUp, login, user } = require('./controllers/api/users');
-
+const { signUp, login, user  } = require('./controllers/api/users');
+const router = require('./routes/api/users'); 
 
 require('dotenv').config();
 require('./config/database');
@@ -14,7 +14,7 @@ require('./config/database');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cors());
-	
+app.use('/api', router); 
  
  app.use(favicon(path.join(__dirname, 'build', 'favicon.ico')));
  app.use(express.static(path.join(__dirname, 'build')));
@@ -23,6 +23,7 @@ app.use(cors());
  app.post('/signup', signUp);
  app.post('/login', login);
  app.put('/user', user);
+ 
 
 
 

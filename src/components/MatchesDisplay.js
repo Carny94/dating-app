@@ -1,14 +1,13 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import formData from  '../pages/Onboarding'
 
-export default function MatchesDisplay ({matches}) {
+
+export default function MatchesDisplay ({matches, setClickedUser}) {
 
     const [matchedProfiles, setMatchedProfile] = useState();
     const matchedUserIds = matches.map(({user_id})  => user_id )
     
     const getMatches = async () =>  { 
-
         try {
            const response = await axios.get('http://localhost:3000/users', {
             params: {userIds: JSON.stringify(matchedUserIds) }
@@ -27,7 +26,14 @@ export default function MatchesDisplay ({matches}) {
 
     return(
         <div className="matches-display">
-           
+           {matchedProfiles?.map((match, _index) => (
+
+           <div key={{_index}} className="match-card" onClick={() => setClickedUser(match)}>
+            <div className='img-container'>
+                <img src={match?.url} alt={match?.first_name + ' profile'} />
+            </div>
         </div>
-    )
+       ))}
+    </div>
+  )
 }
