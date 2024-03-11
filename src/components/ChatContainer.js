@@ -6,6 +6,7 @@ import MatchesDisplay from "./MatchesDisplay";
 
 export default function ChatContainer ({user}) {
     const [ clickedUser, setClickUser] = useState(null);
+    
     return(
         <div className="chat-container">
             <ChatHeader user={user}/>
@@ -15,7 +16,7 @@ export default function ChatContainer ({user}) {
                 <button className="option" disabled={!clickedUser}>Chat</button>
             </div>
 
-            <MatchesDisplay matches= {user.mathches} setClickUser={setClickUser}/>
+            <MatchesDisplay matches= {user.matches} setClickUser={setClickUser}/>
             { clickedUser &&  <ChatDisplay />}
 
 

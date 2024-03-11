@@ -3,18 +3,21 @@ import TinderCard from 'react-tinder-card';
 import ChatContainer from '../components/ChatContainer'
 import axios from 'axios'
 import {useCookies} from 'react-cookie'
+import MatchesDisplay from '../components/MatchesDisplay'; 
 
-export default function Dashboard () {
+
+
+export default function Dashboard ({matches}) {
   const [ cookies] = useCookies(['user'])
   const [user, setUser] = useState(null)
   const [lastDirection, setLastDirection] = useState();
   const [ genderedUsers, setGenderUsers] = useState(null)
   
-  const userId = cookies.UserId
+  const userId = cookies.UserId;
 
   const getUser = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/getUser', {
+      const response = await axios.get('http://localhost:3000/getUsers', {
         params: {userId}
       })
       setUser(response.data)
@@ -29,42 +32,38 @@ export default function Dashboard () {
       params: { gender: user?.gender_interest }
    
     })
-   
     setGenderUsers(response.data)
     } catch (error) {
       console.log(error)
     }
   }
 
+
   useEffect(() => {
     getUser()
+    getGenderedUsers()
+  },[user, genderedUsers])
 
-  }, []);
-
-  useEffect(() => {
-    if (user) {
-        getGenderedUsers()
-    }
-}, [user])
-  
+  console.log('user', user)
+  console.log('genderedUser', genderedUsers)
 
  const updateMatches = async (matchedUserId) => {
+  
     try {
         await axios.put('http://localhost:3000/addmatch', {
         userId,
         matchedUserId
     })
-    getUser()
-  } catch (error) {
-    console.log(error)
-  }
-}  
+          getUser()
+          } catch (error) {
+          console.log(error)
+        }
+      }  
     const swiped = (direction, swipedUserId) => {
     
       if (direction === 'right') {
       updateMatches(swipedUserId)
-      // swipedUsers
-    }
+      }
       setLastDirection(direction)
     }
   
@@ -72,38 +71,37 @@ export default function Dashboard () {
       console.log(name + ' left the screen!')
     }
 
-    const matchedUserIds = user?.matches.map(({user_id}) => user_id).concat(userId)
-    
+    const matchedUserIds = user?.matches.map(({ user_id }) => user_id).concat(userId);
     const filteredGenderedUsers = genderedUsers?.filter(
-      genderedUser => !matchedUserIds.includes(genderedUser.user_id)
-    )
+      genderedUser => !matchedUserIds.includes(genderedUser.user_id))
 
+
+    console.log('matchedUserIds', matchedUserIds);
     return (
       <>
-      { user &&
-      <div className="dashboard">
-          <ChatContainer user={user}/>
-          <div className='swipe-container'>
-            <div className="card-container">
-              {filteredGenderedUsers?.map((genderedUser) =>
-                <TinderCard 
-                    className='swipe' 
-                    key={genderedUser.user_id} 
-                    onSwipe={(dir) => swiped(dir, genderedUser.user_id)} 
-                    onCardLeftScreen={() => outOfFrame(genderedUser.first_name)}>
-                    <div 
-                        style={{ backgroundImage: 'url(' + genderedUser.url + ')'}} 
-                        className='card'>
-                        <h3>{genderedUser.first_name}</h3>
+       {user &&
+            <div className="dashboard">
+                <ChatContainer user={user}/>
+                <div className="swipe-container">
+                    <div className="card-container">
+                        {filteredGenderedUsers?.map((genderedUser) =>
+                            <TinderCard
+                                className="swipe"
+                                key={genderedUser.first_name}
+                                onSwipe={(dir) => swiped(dir, genderedUser.user_id)}
+                                onCardLeftScreen={() => outOfFrame(genderedUser.first_name)}>
+                                <div style={{backgroundImage: "url(" + genderedUser.url + ")"}}
+                                     className="card">
+                                     <h3>{genderedUser.first_name}</h3>
+                                </div>
+                            </TinderCard>
+                        )}
+                        <div className="swipe-info">
+                            {lastDirection ? <p>You swiped {lastDirection}</p> : <p/>}
+                        </div>
                     </div>
-                </TinderCard>
-        )}
-        <div className='swipe-info'>
-             {lastDirection ? <p> You swiped {lastDirection} </p> : <p/>} 
-        </div>
-      </div>
-    </div>
-</div>}
+                </div>
+            </div>}
 </>
   )
 }

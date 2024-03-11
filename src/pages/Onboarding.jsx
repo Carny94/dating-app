@@ -3,35 +3,35 @@ import Nav from "../components/Nav"
 import { useCookies } from 'react-cookie'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
+import MatchesDisplay from '../components/MatchesDisplay';
 
 
+let matches = []
 export default function Onboarding (){
-    const [cookies, setCookie, removeCookies] = useCookies('user');
-    let navigate = useNavigate()
+    const [cookies, setCookie, removeCookie] = useCookies(null);
+
 
     const [formData, setFormData] = useState({
-        user_id: cookies.UserId ,
+        user_id: cookies.UserId,
         first_name: '',
-        dob_day:'',
-        dob_month:'',
+        dob_day: '',
+        dob_month: '',
         dob_year: '',
         show_gender: false,
         gender_identity: 'man',
         gender_interest: 'woman',
         url: '',
-        about:'',
+        about: '',
         matches: [],
+    });
         
-    }
- 
-    )
-   
-    
+    let navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
             const response = await axios.put('http://localhost:3000/user', {formData})
+            console.log(response)
             const success = response.status === 200 
             if (success) navigate('/dashboard')
         } catch (err) {
@@ -42,8 +42,8 @@ export default function Onboarding (){
 
     const handleChange = (e) => {
        
-        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value 
-        const name = e.target.name
+        const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+        const name = e.target.name;
 
         setFormData(( prevState ) => ({
             ...prevState,
@@ -188,19 +188,22 @@ export default function Onboarding (){
                     <section>
                     <label htmlFor="about">Profile Pic</label>
                         <input
-                            type= "url"
-                            name= "url"
-                            id= "url"
+                            type="url"
+                            name="url"
+                            id="url"
                             onChange={handleChange}
                             required={true}
                             />
                         <div className="photo-container">
                             {formData.url && <img src={formData.url} alt="profile pic preview" />}
-                            
+                        <MatchesDisplay matches={formData.matches} />
                     </div>
                     </section>                  
                 </form>
             </div>          
         </>
     )
+    
 }
+
+export {matches} 
