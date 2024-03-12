@@ -20,9 +20,9 @@ app.use('/api', router);
  app.use(express.static(path.join(__dirname, 'build')));
 
  app.use('/users', require('./routes/api/users'));
-//  app.post('/signup', signUp);
-//  app.post('/login', login);
-//  app.put('/user', user);
+ app.post('/signup', signUp);
+ app.post('/login', login);
+ app.put('/user', user);
  
 
 

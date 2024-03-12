@@ -27,7 +27,6 @@ export default function AuthModel ({setShowModel, isSignUp}){
               
                 setCookie('AuthToken', response.data.token);
                 setCookie('UserId', response.data.user_id)
-                // original UserId
 
                 const success =  response.status === 201;
 
