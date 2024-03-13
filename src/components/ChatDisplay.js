@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 export default function ChatDisplay ({user, clickedUser}) {
 
     const [usersMessages, setUsersMessages] = useState();
-    const [clickedUserMessages, setClickedUsersMessages] = useState(null)
+    const [clickedUsersMessages, setClickedUsersMessages] = useState(null)
     const userId = user?.user_id
     const clickedUserId = clickedUser?.user_id;
 
@@ -40,7 +40,7 @@ const getClickedUsersMessages = async () => {
 useEffect(() => {
 getUsersMessages()
 getClickedUsersMessages()
-},[usersMessages, clickedUserMessages])
+},[])
 
 const messages = [];
 
@@ -64,16 +64,14 @@ clickedUsersMessages?.forEach(message => {
 
 const descendingOrderMessages = messages.sort((a,b) => a.timestamp.localCompare(b.timestamp))
 
-
-console.log('userMessages', usersMessages)
-// console.log('formattedMessages', formattedMessage)
-
     return(
        <>
-       <Chat />
+       <Chat descendingOrderMessages={descendingOrderMessages}/>
        <ChatInput />
-
-
+            user={user}
+            clickedUser={clickedUser}
+            getClickedUserMessages={getClickedUsersMessages}
+            getUserMessages={getUsersMessages}
        </>
     )
 }

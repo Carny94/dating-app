@@ -11,6 +11,6 @@ router.get('/genderedUsers', usersCtrl.genderedUsers);
 router.put('/user', usersCtrl.user);
 router.get('/users', usersCtrl.users)
 router.get('/messages', usersCtrl.messages);
-
+router.post('/message', usersCtrl.message);
 
 module.exports = router;

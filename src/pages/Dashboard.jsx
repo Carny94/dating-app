@@ -41,8 +41,14 @@ export default function Dashboard ({matches}) {
 
   useEffect(() => {
     getUser()
-    getGenderedUsers()
-  },[user, genderedUsers])
+
+}, [])
+
+useEffect(() => {
+    if (user) {
+        getGenderedUsers()
+    }
+}, [user])
 
   console.log('user', user)
   console.log('genderedUser', genderedUsers)
@@ -72,8 +78,7 @@ export default function Dashboard ({matches}) {
     }
 
     const matchedUserIds = user?.matches.map(({ user_id }) => user_id).concat(userId);
-    const filteredGenderedUsers = genderedUsers?.filter(
-      genderedUser => !matchedUserIds.includes(genderedUser.user_id))
+    const filteredGenderedUsers = genderedUsers?.filter(genderedUser => !matchedUserIds.includes(genderedUser.user_id))
 
 
     console.log('matchedUserIds', matchedUserIds);

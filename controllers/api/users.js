@@ -13,7 +13,8 @@ module.exports = {
     getUsers,
     addMatch,
     users,
-    messages
+    messages,
+    message
 }
 
 async function signUp(req, res) {
@@ -57,11 +58,10 @@ async function signUp(req, res) {
 
 
 async function genderedUsers (req,res) {
-
+console.log(genderedUsers)
     const client = new MongoClient(uri);
     const gender = req.query.gender;
    
-    console.log('gender', gender)
     try {
         await client.connect()
         const database = client.db('app-data')
@@ -69,7 +69,7 @@ async function genderedUsers (req,res) {
         const query = {gender_identity: {$eq : gender}}
         const foundUsers = await users.find(query).toArray()
 
-        res.send(foundUsers)
+        res.json(foundUsers)
     } finally {
         await client.close();
 
@@ -232,6 +232,20 @@ async function messages (req, res) {
    } finally {
     await client.close()
    }
+}
+
+async function message (req, res) {
+    const client = new MongoClient(uri);
+    const message = req.body.message;
+    try {
+        await client.connect();
+        const database = client.db('app-data');
+        const messages = database.collection('messages');
+        const insertertedMessage = await messages.insertOne(message)
+        res.send(insertertedMessage)
+    } finally {
+        await client.close();
+    }
 }
     
 
