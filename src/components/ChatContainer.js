@@ -18,7 +18,7 @@ export default function ChatContainer ({ user }) {
 
             {!clickedUser && <MatchesDisplay matches={user.matches} setClickUser={setClickUser}/>}
 
-            { clickedUser &&  <ChatDisplay />}
+            { clickedUser &&  <ChatDisplay user={user} clickedUser={clickedUser} />}
         </div>
     )
 }

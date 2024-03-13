@@ -5,13 +5,12 @@ import { useCookies } from "react-cookie";
 
 export default function MatchesDisplay ({matches, setClickedUser}) {
 
-    const [matchedProfiles, setMatchedProfile] = useState([
-
-    ]);
+    const [matchedProfiles, setMatchedProfile] = useState([]);
     const [cookies, setCookie, removeCookie] = useCookies(null);
 
     const matchedUserIds = matches.map(({ user_id}) => user_id)
     const userId = cookies.UserId;
+    console.log(userId)
 
     const getMatches = async () =>  { 
         try {
@@ -33,7 +32,6 @@ export default function MatchesDisplay ({matches, setClickedUser}) {
           .length > 0
     );
     
-  
 
       return (
         <div className="matches-display">
