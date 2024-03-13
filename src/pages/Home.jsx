@@ -12,15 +12,12 @@ export default function Home() {
 
     const authToken = false;
 
-
     const handleClick = () => {
-       
         setShowModel(true)
         setIsSignUp(true)
   };
 
   return (
- 
     <div className='overlay'>
       <Nav 
       minimal={false} 
