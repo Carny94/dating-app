@@ -13,7 +13,6 @@ const Dashboard = ({matches}) => {
     console.log(genderedUsers)
     // genderedUsers is not being pushed to the gendered user array
     const userId = cookies.UserId
-  
 
     const getUser = async () => {
         try {
@@ -70,7 +69,7 @@ const Dashboard = ({matches}) => {
         console.log(name + ' left the screen!')
     }
 
-    const matchedUserIds = user?.matches.map(({ user_id, }) => user_id ).concat(userId);
+    const matchedUserIds = user?.matches?.map(({ user_id, }) => user_id ).concat(userId);
     console.log({user})
     const filteredGenderedUsers = genderedUsers?.filter(genderedUser => !matchedUserIds.includes(genderedUser.user_id));
    
