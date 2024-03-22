@@ -2,6 +2,7 @@ import React from 'react';
 import Nav from '../components/Nav';
 import AuthModel from '../components/AuthModel';
 import { useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 
 
@@ -9,12 +10,22 @@ export default function Home() {
 
     const [showModel, setShowModel] = useState(false);
     const [isSignUp, setIsSignUp] = useState(true);
-
-    const authToken = false;
+    const [cookies, setCookie, removeCookie] = useCookies(['User'])
+    
+    const authToken = cookies.AuthToken;
 
     const handleClick = () => {
         setShowModel(true)
         setIsSignUp(true)
+
+        if (authToken) {
+          removeCookie('UserId', cookies.UserId);
+          removeCookie('AuthToken', cookies.AuthToken);
+          window.location.reload()
+          return
+        }
+        setShowModel(true);
+        setIsSignUp(true);
   };
 
   return (

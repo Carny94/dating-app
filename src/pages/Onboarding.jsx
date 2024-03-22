@@ -3,6 +3,7 @@ import {useState} from 'react'
 import {useCookies} from 'react-cookie'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
+import Dashboard from './Dashboard'
 
 const OnBoarding = () => {
     const [cookies, setCookie, removeCookie] = useCookies(null)
@@ -24,17 +25,17 @@ const OnBoarding = () => {
     let navigate = useNavigate()
 
     const handleSubmit = async (e) => {
-        console.log('submitted')
+       
         e.preventDefault()
         try {
             const response = await axios.put('http://localhost:3000/user', {formData})
-            console.log(response)
             const success = response.status === 200
             if (success) navigate('/dashboard')
+            console.log('onboarding res',response)
         } catch (err) {
             console.log(err)
         }
-
+        
     }
 
     const handleChange = (e) => {
@@ -207,6 +208,7 @@ const OnBoarding = () => {
                         <div className="photo-container">
                             {formData.url && <img src={formData.url} alt="profile pic preview"/>}
                         </div>
+                        
 
 
                     </section>

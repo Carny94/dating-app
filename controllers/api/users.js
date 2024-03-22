@@ -1,9 +1,11 @@
 const {MongoClient} = require ('mongodb');
-const uri = 'mongodb+srv://carnealao:Mookie123!@cluster0.hheozaf.mongodb.net/?retryWrites=true&w=majority'
 const { v4: uuidv4} = require ('uuid')
 const jwt = require('jsonwebtoken');
 const { error } = require('console');
 const bcrypt = require('bcrypt');
+
+require('dotenv').config()
+const uri = process.env.DATABASE_URL;
 
 module.exports = {
     signUp,
@@ -20,7 +22,7 @@ module.exports = {
 async function signUp(req, res) {
     const client = new MongoClient(uri);
     const { email, password } = req.body;
-    console.log(req.body);
+
     const generatedUserId = uuidv4();
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -56,27 +58,6 @@ async function signUp(req, res) {
     }
 }
 
-
-async function genderedUsers (req,res) {
-console.log(genderedUsers)
-    const client = new MongoClient(uri);
-    const gender = req.query.gender;
-   
-    try {
-        await client.connect()
-        const database = client.db('app-data')
-        const users = database.collection('users')
-        const query = {gender_identity: {$eq : gender}}
-        const foundUsers = await users.find(query).toArray()
-
-        res.json(foundUsers)
-    } finally {
-        await client.close();
-
-    }
-
-}
-
 async function login (req,res) {
 
     const client = new MongoClient(uri);
@@ -107,8 +88,6 @@ async function user (req, res) {
     const client = new MongoClient(uri);
     const formData = req.body.formData
 
-    console.log(formData)
-
     try {
         await client.connect()
         const database = client.db('app-data')
@@ -137,18 +116,40 @@ async function user (req, res) {
     }
 }
 
-async function getUsers(req, res) {
+
+async function genderedUsers (req,res) {
+    const client = new MongoClient(uri);
+    const gender = req.query.gender;
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
+        const query = {gender_identity: {$eq : gender}}
+        const foundUsers = await users.find(query).toArray()
+
+        res.json(foundUsers)
+    } finally {
+        await client.close();
+
+    }
+
+}
+
+
+
+
+async function getUsers (req, res) {
     const client = new MongoClient(uri);
     const userId = req.query.userId;
 
-    console.log('userId', userId);
+    console.log('userId Parameter:', req.query.userId);
 
     try {
         await client.connect();
         const database = client.db('app-data');
         const users = database.collection('users');
 
-        const query = { user_id: userId }; // Assuming user_id is correct field name
+        const query = { user_id: userId }; 
         const user = await users.findOne(query);
         
         if (!user) {

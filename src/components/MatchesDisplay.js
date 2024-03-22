@@ -4,9 +4,8 @@ import { useCookies } from "react-cookie";
 
 
 export default function MatchesDisplay ({matches, setClickedUser}) {
-
-    const [matchedProfiles, setMatchedProfile] = useState([]);
-    const [cookies, setCookie, removeCookie] = useCookies(null);
+    const [matchedProfiles, setMatchedProfile] = useState(null);
+    const [cookies] = useCookies(null);
 
     const matchedUserIds = matches.map(({ user_id}) => user_id)
     const userId = cookies.UserId;
@@ -26,20 +25,31 @@ export default function MatchesDisplay ({matches, setClickedUser}) {
         getMatches();
     }, [matches]);
   
+    const handleAddMatch = async (matchUserId) => {
+      try {
+          await axios.patch(`http://localhost:3000/users/${userId}`, {
+              $push: { matches: matchUserId } // Assuming 'matches' is the array field in your MongoDB document
+          });
+          // Perform any necessary actions after adding the match
+      } catch (error) {
+          console.log(error);
+      }
+  };
     const filteredMatchedProfiles = matchedProfiles?.filter(
       (matchedProfile) =>
-        matchedProfile.matches.filter((profile) => profile.user_id == userId)
+        matchedProfile.matches.filter((profile) => profile.user_id === userId)
           .length > 0
     );
     
 
       return (
         <div className="matches-display">
-          {matchedProfiles?.map((match, _index) => (
+          {filteredMatchedProfiles?.map((match) => (
             <div 
-              key={{_index}}
+              key={match.user_id}
               className="match-card" 
-              onClick={() => setClickedUser(match)}
+              onClick={() => {setClickedUser(match);
+                 handleAddMatch(match.user_id);}}
               >
               <div className="img-container">
                 <img src={match?.url} alt={match?.first_name + " profile"} />

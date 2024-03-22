@@ -23,11 +23,8 @@ app.use('/api', router);
  app.post('/signup', signUp);
  app.post('/login', login);
  app.put('/user', user);
+
  
-
-
-
-
  app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });

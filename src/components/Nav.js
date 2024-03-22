@@ -2,14 +2,12 @@ import lovester from '../images/lovester.png';
 import ytlogo from '../images/ytlogo.png';
 
 
-export default function Nav ({minimal, setShowModel, showModel, setIsSignUp}) {
+export default function Nav ({authToken, minimal, setShowModel, showModel, setIsSignUp}) {
 
 const handleClick = () => {
     setShowModel(true);
     setIsSignUp(false);
 }
-
-const authToken = false;
     return(
         <>
        <nav>
