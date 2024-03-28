@@ -219,7 +219,6 @@ nav .logo-container .logo {
 .dashboard {
   display: flex;
   justify-content: space-between;
-
 }
 
 .dashboard .swipe-container {
@@ -289,12 +288,12 @@ nav .logo-container .logo {
 
 .chat-container .option:disabled {
   border-bottom: solid 4px rgb(187, 187, 187);
-
-
 }
-.chat-container .profile ,
+
+.chat-container .profile,
 .chat-container .log-out-icon {
   display: flex;
+  align-items: center;
   padding: 20px;
   color: rgb(255, 255, 255);
 }
@@ -317,7 +316,6 @@ nav .logo-container .logo {
   padding: 20px;
   height: 60vh;
   overflow-y: auto;
-
 }
 /* --------- CHAT INPUT-------- */
 .chat-input {

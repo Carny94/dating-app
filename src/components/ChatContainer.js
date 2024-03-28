@@ -12,8 +12,8 @@ export default function ChatContainer ({ user }) {
             <ChatHeader user={user}/>
 
             <div>
-                <button className="option">onClick={()=> setClickUser(null)} Matches</button>
-                <button className="option" disabled={!clickedUser}>Chat</button>
+            <button className="option" onClick={() => setClickUser(null)}>Matches</button>
+    <button className="option" disabled={!clickedUser}>Chat</button>
             </div>
 
             {!clickedUser && <MatchesDisplay matches={user.matches} setClickUser={setClickUser}/>}
