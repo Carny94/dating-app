@@ -118,8 +118,10 @@ async function user (req, res) {
 
 
 async function genderedUsers (req,res) {
+
     const client = new MongoClient(uri);
     const gender = req.query.gender;
+    console.log("Received gender parameter:", gender); 
     try {
         await client.connect()
         const database = client.db('app-data')
@@ -135,14 +137,9 @@ async function genderedUsers (req,res) {
 
 }
 
-
-
-
 async function getUsers (req, res) {
     const client = new MongoClient(uri);
     const userId = req.query.userId;
-
-    console.log('userId Parameter:', req.query.userId);
 
     try {
         await client.connect();

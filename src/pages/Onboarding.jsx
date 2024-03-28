@@ -18,14 +18,14 @@ const OnBoarding = () => {
         gender_interest: "woman",
         url: "",
         about: "",
-        matches: []
+        matches: [],
 
     })
 
     let navigate = useNavigate()
 
     const handleSubmit = async (e) => {
-       
+       console.log(handleSubmit)
         e.preventDefault()
         try {
             const response = await axios.put('http://localhost:3000/user', {formData})
@@ -214,6 +214,7 @@ const OnBoarding = () => {
                     </section>
 
                 </form>
+                
             </div>
         </>
     )

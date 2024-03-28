@@ -10,6 +10,7 @@ const Dashboard = ({matches}) => {
     const [lastDirection, setLastDirection] = useState()
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
     const [loading, setLoading] = useState(true);
+    
     console.log(genderedUsers)
     // genderedUsers is not being pushed to the gendered user array
     const userId = cookies.UserId
@@ -28,6 +29,7 @@ const Dashboard = ({matches}) => {
         try {
             const response = await axios.get('http://localhost:3000/genderedUsers', {
                 params: {gender: user?.gender_interest}
+              
             })
             setGenderedUsers(response.data)
         } catch (error) {
@@ -70,9 +72,10 @@ const Dashboard = ({matches}) => {
     }
 
     const matchedUserIds = user?.matches?.map(({ user_id, }) => user_id ).concat(userId);
-    console.log({user})
-    const filteredGenderedUsers = genderedUsers?.filter(genderedUser => !matchedUserIds.includes(genderedUser.user_id));
-   
+    console.log({user, matches})
+    const filteredGenderedUsers = Array.isArray(genderedUsers)
+    ? genderedUsers.filter(genderedUser => !matchedUserIds.includes(genderedUser.user_id))
+    : [];   
   
     console.log('filteredGenderedUsers ', filteredGenderedUsers)
     return (
@@ -86,7 +89,7 @@ const Dashboard = ({matches}) => {
                             <ChatContainer user={user} />
                             <div className="swipe-container">
                                 <div className="card-container">
-                                    {genderedUsers?.map((genderedUser) => (
+                                    {filteredGenderedUsers?.map((genderedUser) => (
                                         <TinderCard
                                             className="swipe"
                                             key={genderedUser.user_id}

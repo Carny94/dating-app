@@ -7,9 +7,9 @@ export default function MatchesDisplay ({matches, setClickedUser}) {
     const [matchedProfiles, setMatchedProfile] = useState(null);
     const [cookies] = useCookies(null);
 
-    const matchedUserIds = matches?.map(({ user_id}) => user_id)
+    const matchedUserIds = matches?.map(({ user_id }) => user_id)
+    console.log(matches)
     const userId = cookies.UserId;
-    console.log(userId)
 
     const getMatches = async () =>  { 
         try {
@@ -39,8 +39,7 @@ export default function MatchesDisplay ({matches, setClickedUser}) {
       (matchedProfile) =>
         matchedProfile.matches.filter((profile) => profile.user_id === userId)
           .length > 0
-    );
-    
+    ) 
 
       return (
         <div className="matches-display">
