@@ -20,8 +20,9 @@ export default function ChatHeader ({user}) {
                 </div>
                 <h3>{user.first_name}</h3>
             </div>
-            <i className="log-out-icon" onClick={logout}> ⬅ </i>
-        </div>
+            <i className="log-out-icon" 
+               onClick={logout}> ⬅ </i>
+            </div>
         
     )
 }

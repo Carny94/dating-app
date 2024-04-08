@@ -23,10 +23,9 @@ export default function ChatInput ({user, clickedUser, getUserMessages, getClick
         }
     }
     return (
-    
-    <div className="chat-input">
-        <textArea value={textArea}  onChange={(e) => setTextArea(e.target.value)} />
-        <button className={"secondary-button"} onClick={addMessage}>Submit</button>
-    </div>
+        <div className="chat-input">
+            <textarea value={textArea} onChange={(e) => setTextArea(e.target.value)}/>
+            <button className="secondary-button" onClick={addMessage}>Submit</button>
+        </div>
     )
 }

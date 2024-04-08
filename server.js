@@ -3,7 +3,7 @@ const express = require('express');
  const favicon = require('serve-favicon');
  const logger = require('morgan');
  const cors = require('cors');
-const { signUp, login, user  } = require('./controllers/api/users');
+const { signUp, login, user, getUsers  } = require('./controllers/api/users');
 const router = require('./routes/api/users'); 
 
 require('dotenv').config();
@@ -22,6 +22,8 @@ app.use('/api', router);
  app.use('/users', require('./routes/api/users'));
  app.post('/signup', signUp);
  app.post('/login', login);
+ router.get('/getUsers', getUsers);
+
  app.put('/user', user);
 
  

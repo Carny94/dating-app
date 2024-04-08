@@ -25,15 +25,15 @@ export default function MatchesDisplay ({ matches, setClickedUser }) {
     }, [matches]);
 
     const handleAddMatch = async (matchUserId) => {
-        try {
-            await axios.patch(`http://localhost:3000/users/${userId}`, {
-                $push: { matches: matchUserId } // Update this with correct MongoDB update syntax
-            });
-            // Perform any necessary actions after adding the match
-        } catch (error) {
-            console.log(error);
-        }
-    };
+      try {
+          await axios.patch(`http://localhost:3000/users/${userId}`, {
+              matches: { $push: matchUserId } // Use the correct syntax for MongoDB update operation
+          });
+      } catch (error) {
+          console.log(error);
+      }
+  };
+  
 
     const handleMatchClick = (match) => {
         setClickedUser(match);

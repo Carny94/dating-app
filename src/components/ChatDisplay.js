@@ -62,7 +62,7 @@ clickedUsersMessages?.forEach(message => {
      messages.push(formattedMessage)
 });
 
-const descendingOrderMessages = messages.sort((a,b) => a.timestamp.localCompare(b.timestamp))
+const descendingOrderMessages = messages?.sort((a,b) => a.timestamp.localCompare(b.timestamp))
 
     return(
        <>

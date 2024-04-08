@@ -173,7 +173,7 @@ async function addMatch (req, res) {
 
         const query = { user_id: userId}
         const updateDocument = {
-            $push: {matches: { user_id: matchedUserId}}
+            $push: {matches: {user_id: matchedUserId}}
         }
         const user = await users.updateOne(query, updateDocument)
         res.send(user)

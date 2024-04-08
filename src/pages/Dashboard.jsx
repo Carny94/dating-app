@@ -9,10 +9,8 @@ const Dashboard = ({matches}) => {
     const [genderedUsers, setGenderedUsers] = useState(null)
     const [lastDirection, setLastDirection] = useState()
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
-    const [loading, setLoading] = useState(true);
     
     console.log(genderedUsers)
-    // genderedUsers is not being pushed to the gendered user array
     const userId = cookies.UserId
 
     const getUser = async () => {
@@ -44,7 +42,7 @@ const Dashboard = ({matches}) => {
     useEffect(() => {
         if (user) {
             getGenderedUsers()
-            setLoading(false); 
+           
         }
     }, [user])
 
@@ -79,9 +77,6 @@ const Dashboard = ({matches}) => {
     console.log('filteredGenderedUsers ', filteredGenderedUsers)
     return (
       <>
-            {loading ? ( // Render loading indicator while loading data
-                <div>Loading...</div>
-            ) : (
                 <>
                     {user && (
                         <div className="dashboard">
@@ -111,7 +106,6 @@ const Dashboard = ({matches}) => {
                         </div>
                     )}
                 </>
-            )}
         </>
     );
 };
