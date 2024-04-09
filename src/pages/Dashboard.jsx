@@ -9,11 +9,12 @@ const Dashboard = ({matches}) => {
     const [genderedUsers, setGenderedUsers] = useState(null)
     const [lastDirection, setLastDirection] = useState()
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
-    
-    console.log(genderedUsers)
+
+ 
     const userId = cookies.UserId
 
     const getUser = async () => {
+ 
         try {
             const response = await axios.get('http://localhost:3000/getUsers', {
                 params: {userId}
@@ -23,6 +24,7 @@ const Dashboard = ({matches}) => {
             console.log(error)
         }
     }
+   
     const getGenderedUsers = async () => {
         try {
             const response = await axios.get('http://localhost:3000/genderedUsers', {
@@ -45,7 +47,7 @@ const Dashboard = ({matches}) => {
            
         }
     }, [user])
-
+  
     const updateMatches = async (matchedUserId) => {
         try {
             await axios.put('http://localhost:3000/addmatch', {
@@ -74,7 +76,6 @@ const Dashboard = ({matches}) => {
     ? genderedUsers.filter(genderedUser => !matchedUserIds.includes(genderedUser.user_id))
     : [];   
   
-    console.log('filteredGenderedUsers ', filteredGenderedUsers)
     return (
       <>
                 <>
