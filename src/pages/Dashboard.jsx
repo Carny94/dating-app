@@ -44,10 +44,9 @@ const Dashboard = ({matches}) => {
     useEffect(() => {
         if (user) {
             getGenderedUsers()
-           
         }
     }, [user])
-  
+    
     const updateMatches = async (matchedUserId) => {
         try {
             await axios.put('http://localhost:3000/addmatch', {

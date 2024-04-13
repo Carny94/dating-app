@@ -3,11 +3,11 @@ import {useState} from 'react'
 import {useCookies} from 'react-cookie'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios'
-import Dashboard from './Dashboard'
 
 const OnBoarding = () => {
     const [cookies, setCookie, removeCookie] = useCookies(null)
     const [formData, setFormData] = useState({
+        
         user_id: cookies.UserId,
         first_name: "",
         dob_day: "",
@@ -21,7 +21,6 @@ const OnBoarding = () => {
         matches: [],
 
     })
-
     let navigate = useNavigate()
 
     const handleSubmit = async (e) => {
@@ -209,8 +208,6 @@ const OnBoarding = () => {
                             {formData.url && <img src={formData.url} alt="profile pic preview"/>}
                         </div>
                         
-
-
                     </section>
 
                 </form>

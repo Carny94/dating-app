@@ -84,6 +84,30 @@ async function login (req,res) {
     }
 }
 
+async function getUsers (req, res) {
+    const client = new MongoClient(uri);
+    const userId = req.query.userId;
+
+    try {
+        await client.connect();
+        const database = client.db('app-data');
+        const users = database.collection('users');
+        const query = { user_id: userId }; 
+        const user = await users.findOne(query);
+        
+        if (!user) {
+            res.status(404).send('User not found');
+            return;
+        }
+        res.send(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Internal Server Error');
+    } finally {
+        await client.close();
+    }
+}
+
 async function user (req, res) {
     const client = new MongoClient(uri);
     const formData = req.body.formData
@@ -92,7 +116,6 @@ async function user (req, res) {
         await client.connect()
         const database = client.db('app-data')
         const users = database.collection('users')
-
         const query = { user_id: formData.user_id}
         const updateDocument = {
             $set: {
@@ -137,31 +160,7 @@ async function genderedUsers (req,res) {
 
 }
 
-async function getUsers (req, res) {
-    const client = new MongoClient(uri);
-    const userId = req.query.userId;
 
-    try {
-        await client.connect();
-        const database = client.db('app-data');
-        const users = database.collection('users');
-
-        const query = { user_id: userId }; 
-        const user = await users.findOne(query);
-        
-        if (!user) {
-            res.status(404).send('User not found');
-            return;
-        }
-
-        res.send(user);
-    } catch (error) {
-        console.log(error);
-        res.status(500).send('Internal Server Error');
-    } finally {
-        await client.close();
-    }
-}
 async function addMatch (req, res) {
     const client = new MongoClient(uri);
     const { userId, matchedUserId} = req.body;

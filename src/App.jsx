@@ -15,6 +15,7 @@ import {useCookies} from 'react-cookie'
           <Route path="/" element={<Home/>}/>
           {authToken && <Route path="/dashboard" element={<Dashboard  />}/>}
           {authToken && <Route path="/Onboarding" element={<Onboarding  />} />}
+        
         </Routes>
         </BrowserRouter>
       );

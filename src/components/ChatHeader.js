@@ -2,6 +2,7 @@ import { useCookies } from 'react-cookie'
 
 
 export default function ChatHeader ({user}) {
+    console.log(user)
 
     const [cookies, setCookie, removeCookies] = useCookies(['user']);
 
